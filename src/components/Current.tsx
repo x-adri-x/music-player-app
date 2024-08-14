@@ -18,9 +18,11 @@ export default function Current({ track }: { track: TrackType }) {
       <p className="self-start text-3xl uppercase text-white font-bold">{track.title}</p>
       <p className="self-start text-white text-sm">{track.artist}</p>
 
-      <div className="self-end">
-        <p>{duration}</p>
-        <Icon icon="ri:play-fill" width="30px" style={{ color: 'black' }} className="bg-lime-500 rounded-full p-3" />
+      <div className="self-end w-full">
+        <div className="flex justify-between items-center">
+          <p className="text-white">{duration}</p>
+          <Icon icon="ri:play-fill" width="30px" style={{ color: 'black' }} className="bg-lime-500 rounded-full p-3" />
+        </div>
       </div>
     </div>
   )
