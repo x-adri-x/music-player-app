@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import Track, { TrackType } from '@/components/Track'
 import Current from './Current'
+import { CurrentTrackContext } from './CurrentTrackContext'
+import Player from './Player'
 
 export default function Layout() {
   const [tracks, setTracks] = useState<Array<TrackType>>([])
@@ -10,7 +12,6 @@ export default function Layout() {
         .then((response) => response.json())
         .then((data) => data.data)
       if (!ignore) {
-        console.log(result)
         setTracks(result)
       }
     }
@@ -30,9 +31,10 @@ export default function Layout() {
       <Current track={tracks[0]} />
       <ul>
         {tracks.slice(1).map((track) => (
-          <Track track={track} key={track.title} />
+          <Track track={track} key={track.id} />
         ))}
       </ul>
+      <Player track={tracks[0]} />
     </>
   )
 }
