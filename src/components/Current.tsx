@@ -22,7 +22,7 @@ export default function Current({ track }: { track: TrackType }) {
   }, [])
 
   function handleClick() {
-    changeTrack(track.id)
+    changeTrack(track)
     audio.play()
   }
 

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import Track, { TrackType } from '@/components/Track'
 import Current from './Current'
-import { CurrentTrackContext } from './CurrentTrackContext'
 import Player from './Player'
 
 export default function Layout() {
@@ -34,7 +33,7 @@ export default function Layout() {
           <Track track={track} key={track.id} />
         ))}
       </ul>
-      <Player track={tracks[0]} />
+      <Player />
     </>
   )
 }

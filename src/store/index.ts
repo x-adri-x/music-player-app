@@ -1,17 +1,22 @@
+import { TrackType } from '@/components/Track'
 import { create } from 'zustand'
 
 export interface State {
-  currentTrack: string | null
-  ref: HTMLAudioElement | null
-  setRef: (element: HTMLAudioElement | null) => void
-  changeTrack: (id: string) => void
+  currentTrack: TrackType | null
+  currentAudioRef: HTMLAudioElement | null
+  currentLIRef: HTMLLIElement | null
+  setAudioRef: (element: HTMLAudioElement | null) => void
+  setLIRef: (element: HTMLLIElement | null) => void
+  changeTrack: (track: TrackType) => void
 }
 
 const useStore = create<State>((set) => ({
   currentTrack: null,
-  ref: null,
-  setRef: (element) => set(() => ({ ref: element })),
-  changeTrack: (id) => set(() => ({ currentTrack: id })),
+  currentAudioRef: null,
+  currentLIRef: null,
+  setAudioRef: (element) => set(() => ({ currentAudioRef: element })),
+  setLIRef: (element) => set(() => ({ currentLIRef: element })),
+  changeTrack: (track) => set(() => ({ currentTrack: track })),
 }))
 
 export default useStore

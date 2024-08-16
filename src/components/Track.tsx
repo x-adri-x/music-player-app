@@ -12,21 +12,28 @@ export type TrackType = {
 }
 
 export default function Track({ track }: { track: TrackType }) {
+  const liRef = useRef<HTMLLIElement | null>(null)
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const changeTrack = useStore((state) => state.changeTrack)
-  const setRef = useStore((state) => state.setRef)
+  const setAudioRef = useStore((state) => state.setAudioRef)
+  const setLIRef = useStore((state) => state.setLIRef)
   const currentTrack = useStore((state) => state.currentTrack)
-  const ref = useStore((state) => state.ref)
+  const currentAudioRef = useStore((state) => state.currentAudioRef)
+  const currentLIRef = useStore((state) => state.currentLIRef)
 
   const handleClick = () => {
     // console.log(liRef.current?.nextSibling)
-    if (currentTrack !== track.id) ref?.pause()
+    currentLIRef?.classList.remove('bg-stone-300/10')
+    liRef.current?.classList.add('bg-stone-300/10')
+
+    if (currentTrack?.id !== track.id) currentAudioRef?.pause()
     audioRef.current?.play()
-    setRef(audioRef.current)
-    changeTrack(track.id)
+    setLIRef(liRef.current)
+    setAudioRef(audioRef.current)
+    changeTrack(track)
   }
   return (
-    <li className="font-sans text-sm flex p-3" onClick={handleClick}>
+    <li ref={liRef} className="font-sans text-sm flex p-3" onClick={handleClick}>
       <Image src={track.cover} />
       <div className="flex flex-col">
         <span className="mb-2 text-white">{track.title}</span>
