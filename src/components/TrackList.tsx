@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react'
 import Track, { TrackType } from '@/components/Track'
+import { TrackContext } from './TrackContext'
 import Current from './Current'
 import Player from './Player'
+import useStore from '@/store'
 
 export default function Layout() {
   const [tracks, setTracks] = useState<Array<TrackType>>([])
+  const currentTrack = useStore((state) => state.currentTrack)
+
   useEffect(() => {
     async function getData() {
       const result = await fetch('./data.json')
@@ -26,14 +30,14 @@ export default function Layout() {
     if (tracks.length === 0) return <p className="font-sans text-slate-200">Loading ...</p>
   }
   return (
-    <>
-      <Current track={tracks[0]} />
+    <TrackContext.Provider value={tracks}>
+      <Current />
       <ul>
         {tracks.slice(1).map((track) => (
           <Track track={track} key={track.id} />
         ))}
       </ul>
-      <Player />
-    </>
+      {currentTrack && <Player />}
+    </TrackContext.Provider>
   )
 }

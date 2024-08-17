@@ -16,6 +16,7 @@ export default function Track({ track }: { track: TrackType }) {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const changeTrack = useStore((state) => state.changeTrack)
   const setAudioRef = useStore((state) => state.setAudioRef)
+  const setIsPlaying = useStore((state) => state.setIsPlaying)
   const setLIRef = useStore((state) => state.setLIRef)
   const currentTrack = useStore((state) => state.currentTrack)
   const currentAudioRef = useStore((state) => state.currentAudioRef)
@@ -30,6 +31,7 @@ export default function Track({ track }: { track: TrackType }) {
     audioRef.current?.play()
     setLIRef(liRef.current)
     setAudioRef(audioRef.current)
+    setIsPlaying(true)
     changeTrack(track)
   }
   return (
