@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import { Icon } from '@iconify-icon/react'
+import PlayButton from './PlayButton'
 import { convertDuration } from '@/utils'
 import useStore from '@/store'
 import { TrackContext } from './TrackContext'
@@ -10,8 +11,6 @@ export default function Current() {
   const setAudioRef = useStore((state) => state.setAudioRef)
   const currentAudio = useStore((state) => state.currentAudioRef)
   const currentTrack = useStore((state) => state.currentTrack)
-  const setIsPlaying = useStore((state) => state.setIsPlaying)
-  const isPlaying = useStore((state) => state.isPlaying)
   const changeTrack = useStore((state) => state.changeTrack)
   const [showVolume, setShowVolume] = useState(false)
   const [volume, setVolume] = useState('0.2')
@@ -20,6 +19,7 @@ export default function Current() {
   useEffect(() => {
     const audio = new Audio(current.track)
     setAudioRef(audio)
+    changeTrack(current)
     audio.volume = 0.2
     audio.addEventListener('loadedmetadata', () => {
       setDuration(convertDuration(audio.duration))
@@ -35,17 +35,6 @@ export default function Current() {
   function handleVolumeChange(e: React.ChangeEvent<HTMLInputElement>) {
     setVolume(e.target.value)
     currentAudio!.volume = parseFloat(e.target.value)
-  }
-
-  function handleClick() {
-    if (!isPlaying) {
-      setIsPlaying(true)
-      currentAudio?.play()
-      changeTrack(current)
-    } else {
-      currentAudio?.pause()
-      setIsPlaying(false)
-    }
   }
 
   return (
@@ -79,13 +68,7 @@ export default function Current() {
               onMouseEnter={() => setShowVolume(true)}
               onClick={() => setShowVolume(true)}
             />
-            <Icon
-              icon={isPlaying ? 'ri:pause-fill' : 'ri:play-fill'}
-              width="30px"
-              style={{ color: 'black' }}
-              className="bg-lime-500 rounded-full p-3"
-              onClick={handleClick}
-            />
+            <PlayButton style={{ color: 'black' }} className="bg-lime-500 rounded-full p-3" />
           </div>
         </div>
       </div>

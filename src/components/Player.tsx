@@ -1,18 +1,14 @@
 import Image from '@/components/Image'
-import { Icon } from '@iconify-icon/react'
-import { useEffect, useRef, useState } from 'react'
-import { convertDuration } from '@/utils'
+import PlayButton from './PlayButton'
+import { useEffect, useState } from 'react'
 import useStore from '@/store'
 
 export default function Player() {
   const currentTrack = useStore((state) => state.currentTrack)
   const isPlaying = useStore((state) => state.isPlaying)
-  // const audioRef = useRef<HTMLAudioElement | null>(null)
   const currentAudioRef = useStore((state) => state.currentAudioRef)
-  const icon = isPlaying ? 'ri:pause-fill' : 'ri:play-fill'
   const [currentTime, setCurrentTime] = useState(currentAudioRef?.currentTime)
   const [progress, setProgress] = useState('0')
-  const setIsPlaying = useStore((state) => state.setIsPlaying)
 
   useEffect(() => {
     currentAudioRef?.addEventListener('ontimeupdate', () => console.log('yoo'))
@@ -31,16 +27,6 @@ export default function Player() {
     return () => clearInterval(interval)
   }, [currentTime])
 
-  function handleClick() {
-    if (!isPlaying) {
-      setIsPlaying(true)
-      currentAudioRef?.play()
-    } else {
-      currentAudioRef?.pause()
-      setIsPlaying(false)
-    }
-  }
-
   return (
     <div className="bg-zinc-950 fixed bottom-0 left-0 right-0">
       <div className="flex flex-col">
@@ -50,13 +36,7 @@ export default function Player() {
             <span className="text-white">{currentTrack?.title}</span>
             <span className="text-white opacity-50">{currentTrack?.artist}</span>
           </div>
-          <Icon
-            icon={icon}
-            width="30px"
-            style={{ color: 'white' }}
-            className="justify-self-end"
-            onClick={handleClick}
-          />
+          <PlayButton style={{ color: 'white' }} className="justify-self-end" />
         </div>
         <progress
           max={currentAudioRef!.duration.toString()}
