@@ -14,7 +14,6 @@ export type TrackType = {
 
 export default function Track({ track }: { track: TrackType }) {
   const liRef = useRef<HTMLLIElement | null>(null)
-  const audioRef = useRef<HTMLAudioElement | null>(null)
   const changeTrack = useStore((state) => state.changeTrack)
   const setAudioRef = useStore((state) => state.setAudioRef)
   const setIsPlaying = useStore((state) => state.setIsPlaying)
@@ -29,9 +28,10 @@ export default function Track({ track }: { track: TrackType }) {
     liRef.current?.classList.add('bg-stone-300/10')
 
     if (currentTrack?.id !== track.id) currentAudioRef?.pause()
-    audioRef.current?.play()
+    const audio = new Audio(track.track)
+    audio.play()
     setLIRef(liRef.current)
-    setAudioRef(audioRef.current)
+    setAudioRef(audio)
     setIsPlaying(true)
     changeTrack(track)
   }
@@ -41,9 +41,6 @@ export default function Track({ track }: { track: TrackType }) {
       <div className="flex flex-col">
         <TrackInfo title={track.title} artist={track.artist} titleStyle="mb-2" artistStyle="" />
       </div>
-      <audio ref={audioRef}>
-        <source src={track.track}></source>
-      </audio>
     </li>
   )
 }
