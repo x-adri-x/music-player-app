@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import PlayButton from './PlayButton'
 import Volume from './Volume'
+import Image from './Image'
 import { convertDuration } from '@/utils'
 import useStore from '@/store'
 import { TrackContext } from './TrackContext'
@@ -31,7 +32,7 @@ export default function Current() {
 
   return (
     <div className="h-2/4 flex items-center p-4 flex-col">
-      <img src={current.cover} alt={current.cover} className="w-40 py-4" />
+      <Image src={current.cover} style="w-40 py-4" />
       <p className="self-start text-3xl uppercase text-white font-bold">{current.title}</p>
       <p className="self-start text-white text-sm">{currentTrack?.artist}</p>
 

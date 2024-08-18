@@ -36,7 +36,7 @@ export default function Track({ track }: { track: TrackType }) {
   }
   return (
     <li ref={liRef} className="font-sans text-sm flex p-3" onClick={handleClick}>
-      <Image src={track.cover} />
+      <Image src={track.cover} style="w-16 pr-4" />
       <div className="flex flex-col">
         <span className="mb-2 text-white">{track.title}</span>
         <span className="text-white opacity-50">{track.artist}</span>
