@@ -1,4 +1,5 @@
 import Image from '@/components/Image'
+import TrackInfo from './TrackInfo'
 import { useRef } from 'react'
 import useStore from '@/store'
 
@@ -38,8 +39,7 @@ export default function Track({ track }: { track: TrackType }) {
     <li ref={liRef} className="font-sans text-sm flex p-3" onClick={handleClick}>
       <Image src={track.cover} style="w-16 pr-4" />
       <div className="flex flex-col">
-        <span className="mb-2 text-white">{track.title}</span>
-        <span className="text-white opacity-50">{track.artist}</span>
+        <TrackInfo title={track.title} artist={track.artist} titleStyle="mb-2" artistStyle="" />
       </div>
       <audio ref={audioRef}>
         <source src={track.track}></source>

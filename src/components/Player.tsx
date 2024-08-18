@@ -2,6 +2,7 @@ import Image from '@/components/Image'
 import PlayButton from './PlayButton'
 import { useEffect, useState } from 'react'
 import useStore from '@/store'
+import TrackInfo from './TrackInfo'
 
 export default function Player() {
   const currentTrack = useStore((state) => state.currentTrack)
@@ -28,13 +29,12 @@ export default function Player() {
   }, [currentTime])
 
   return (
-    <div className="bg-zinc-950 fixed bottom-0 left-0 right-0">
+    <div className="bg-zinc-950 fixed bottom-0 left-0 right-0 text-sm">
       <div className="flex flex-col">
         <div className="bg-stone-700 mx-2 rounded-md p-2 flex items-center">
           <Image src={currentTrack!.cover} style="w-16 pr-4" />
           <div className="flex flex-col w-full">
-            <span className="text-white">{currentTrack?.title}</span>
-            <span className="text-white opacity-50">{currentTrack?.artist}</span>
+            <TrackInfo title={currentTrack!.title} artist={currentTrack!.artist} titleStyle="" artistStyle="" />
           </div>
           <PlayButton style={{ color: 'white' }} className="justify-self-end" />
         </div>

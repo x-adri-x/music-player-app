@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Track, { TrackType } from '@/components/Track'
-import { TrackContext } from './TrackContext'
+import { TracksContext } from '@/components/TracksContext'
 import Current from './Current'
 import Player from './Player'
 import useStore from '@/store'
@@ -30,7 +30,7 @@ export default function Layout() {
     if (tracks.length === 0) return <p className="font-sans text-slate-200">Loading ...</p>
   }
   return (
-    <TrackContext.Provider value={tracks}>
+    <TracksContext.Provider value={tracks}>
       <Current />
       <ul>
         {tracks.slice(1).map((track) => (
@@ -38,6 +38,6 @@ export default function Layout() {
         ))}
       </ul>
       {currentTrack && <Player />}
-    </TrackContext.Provider>
+    </TracksContext.Provider>
   )
 }

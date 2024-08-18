@@ -4,10 +4,11 @@ import Volume from './Volume'
 import Image from './Image'
 import { convertDuration } from '@/utils'
 import useStore from '@/store'
-import { TrackContext } from './TrackContext'
+import { TracksContext } from './TracksContext'
+import TrackInfo from './TrackInfo'
 
 export default function Current() {
-  const tracks = useContext(TrackContext)
+  const tracks = useContext(TracksContext)
   const [duration, setDuration] = useState<string | null>(null)
   const setAudioRef = useStore((state) => state.setAudioRef)
   const currentTrack = useStore((state) => state.currentTrack)
@@ -31,9 +32,12 @@ export default function Current() {
   return (
     <div className="h-2/4 flex items-center p-4 flex-col">
       <Image src={current.cover} style="w-40 py-4" />
-      <p className="self-start text-3xl uppercase text-white font-bold">{current.title}</p>
-      <p className="self-start text-white text-sm">{currentTrack?.artist}</p>
-
+      <TrackInfo
+        title={current.title}
+        artist={current.artist}
+        titleStyle="self-start text-3xl uppercase font-bold"
+        artistStyle="self-start"
+      />
       <div className="self-end w-full">
         <div className="flex justify-between items-center">
           <p className="text-white">{duration}</p>

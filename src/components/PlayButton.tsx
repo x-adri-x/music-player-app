@@ -1,7 +1,7 @@
 import useStore from '@/store'
 import { Icon } from '@iconify-icon/react'
 import { useContext } from 'react'
-import { TrackContext } from './TrackContext'
+import { TracksContext } from './TracksContext'
 
 export default function PlayButton({ style, className }: { style: React.CSSProperties; className: string }) {
   const isPlaying = useStore((state) => state.isPlaying)
@@ -9,7 +9,7 @@ export default function PlayButton({ style, className }: { style: React.CSSPrope
   const currentAudioRef = useStore((state) => state.currentAudioRef)
   const currentTrack = useStore((state) => state.currentTrack)
   const changeTrack = useStore((state) => state.changeTrack)
-  const tracks = useContext(TrackContext)
+  const tracks = useContext(TracksContext)
   const current = currentTrack ? currentTrack : tracks[0]
 
   function handleClick() {
