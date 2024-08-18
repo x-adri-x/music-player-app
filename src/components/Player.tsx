@@ -31,7 +31,7 @@ export default function Player() {
     <div className="bg-zinc-950 fixed bottom-0 left-0 right-0">
       <div className="flex flex-col">
         <div className="bg-stone-700 mx-2 rounded-md p-2 flex items-center">
-          <Image src={currentTrack!.cover} />
+          <Image src={currentTrack!.cover} style="w-16 pr-4" />
           <div className="flex flex-col w-full">
             <span className="text-white">{currentTrack?.title}</span>
             <span className="text-white opacity-50">{currentTrack?.artist}</span>
