@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
-import { Icon } from '@iconify-icon/react'
 import PlayButton from './PlayButton'
+import Volume from './Volume'
 import { convertDuration } from '@/utils'
 import useStore from '@/store'
 import { TrackContext } from './TrackContext'
@@ -9,11 +9,8 @@ export default function Current() {
   const tracks = useContext(TrackContext)
   const [duration, setDuration] = useState<string | null>(null)
   const setAudioRef = useStore((state) => state.setAudioRef)
-  const currentAudio = useStore((state) => state.currentAudioRef)
   const currentTrack = useStore((state) => state.currentTrack)
   const changeTrack = useStore((state) => state.changeTrack)
-  const [showVolume, setShowVolume] = useState(false)
-  const [volume, setVolume] = useState('0.2')
   const current = currentTrack ? currentTrack : tracks[0]
 
   useEffect(() => {
@@ -32,11 +29,6 @@ export default function Current() {
     }
   }, [])
 
-  function handleVolumeChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setVolume(e.target.value)
-    currentAudio!.volume = parseFloat(e.target.value)
-  }
-
   return (
     <div className="h-2/4 flex items-center p-4 flex-col">
       <img src={current.cover} alt={current.cover} className="w-40 py-4" />
@@ -46,28 +38,8 @@ export default function Current() {
       <div className="self-end w-full">
         <div className="flex justify-between items-center">
           <p className="text-white">{duration}</p>
-
           <div className="flex items-center">
-            {showVolume && (
-              <input
-                type="range"
-                min="0"
-                max="1"
-                step="0.1"
-                value={volume}
-                onChange={handleVolumeChange}
-                className="accent-lime-500 mr-2"
-                onMouseLeave={() => setShowVolume(false)}
-              />
-            )}
-            <Icon
-              icon="ri:volume-up-fill"
-              width="30px"
-              style={{ color: 'black' }}
-              className="bg-lime-500 rounded-full p-3 mr-2"
-              onMouseEnter={() => setShowVolume(true)}
-              onClick={() => setShowVolume(true)}
-            />
+            <Volume />
             <PlayButton style={{ color: 'black' }} className="bg-lime-500 rounded-full p-3" />
           </div>
         </div>
