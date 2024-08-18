@@ -11,13 +11,11 @@ export default function Current() {
   const [duration, setDuration] = useState<string | null>(null)
   const setAudioRef = useStore((state) => state.setAudioRef)
   const currentTrack = useStore((state) => state.currentTrack)
-  const changeTrack = useStore((state) => state.changeTrack)
   const current = currentTrack ? currentTrack : tracks[0]
 
   useEffect(() => {
     const audio = new Audio(current.track)
     setAudioRef(audio)
-    changeTrack(current)
     audio.volume = 0.2
     audio.addEventListener('loadedmetadata', () => {
       setDuration(convertDuration(audio.duration))
