@@ -46,6 +46,7 @@ export default function Current() {
             <PlayButton style={{ color: 'black' }} className="bg-lime-500 rounded-full p-3" />
           </div>
         </div>
+        <p className="text-white opacity-60" dangerouslySetInnerHTML={{ __html: current.contribution }} />
       </div>
     </div>
   )
