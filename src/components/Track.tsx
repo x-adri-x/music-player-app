@@ -13,7 +13,7 @@ export type TrackType = {
 }
 
 export default function Track({ track }: { track: TrackType }) {
-  const liRef = useRef<HTMLLIElement | null>(null)
+  const liRef = useRef<HTMLLIElement>(null)
   const changeTrack = useStore((state) => state.changeTrack)
   const setAudioRef = useStore((state) => state.setAudioRef)
   const setIsPlaying = useStore((state) => state.setIsPlaying)
@@ -23,7 +23,6 @@ export default function Track({ track }: { track: TrackType }) {
   const currentLIRef = useStore((state) => state.currentLIRef)
 
   const handleClick = () => {
-    // console.log(liRef.current?.nextSibling)
     currentLIRef?.classList.remove('bg-stone-300/10')
     liRef.current?.classList.add('bg-stone-300/10')
 
