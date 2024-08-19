@@ -12,6 +12,10 @@ export default function Volume() {
     currentAudioRef!.volume = parseFloat(e.target.value)
   }
 
+  function handleClick() {
+    showVolume ? setShowVolume(false) : setShowVolume(true)
+  }
+
   return (
     <>
       {showVolume && (
@@ -32,7 +36,7 @@ export default function Volume() {
         style={{ color: 'black' }}
         className="bg-lime-500 rounded-full p-3 mr-2"
         onMouseEnter={() => setShowVolume(true)}
-        onClick={() => setShowVolume(true)}
+        onClick={handleClick}
       />
     </>
   )
