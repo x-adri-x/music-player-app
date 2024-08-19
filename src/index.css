@@ -5,3 +5,9 @@
 .progress {
   @apply [&::-webkit-progress-value]:bg-white;
 }
+
+@layer base {
+  a {
+    @apply text-lime-500;
+  }
+}

@@ -10,27 +10,26 @@ import TrackInfo from './TrackInfo'
 export default function Current() {
   const tracks = useContext(TracksContext)
   const [duration, setDuration] = useState<string | null>(null)
-  const setAudioRef = useStore((state) => state.setAudioRef)
+  const currentAudioRef = useStore((state) => state.currentAudioRef)
   const currentTrack = useStore((state) => state.currentTrack)
   const current = currentTrack ? currentTrack : tracks[0]
+  const audioRef = currentAudioRef ? currentAudioRef : new Audio(tracks[0].track)
+  console.log('current track has changed', currentAudioRef)
 
   useEffect(() => {
-    const audio = new Audio(current.track)
-    setAudioRef(audio)
-    audio.volume = 0.2
-    audio.addEventListener('loadedmetadata', () => {
-      setDuration(convertDuration(audio.duration))
-    })
+    audioRef.volume = 0.2
+    function onMetaDataLoaded() {
+      setDuration(convertDuration(audioRef.duration))
+    }
+    audioRef.addEventListener('loadedmetadata', onMetaDataLoaded)
 
     return () => {
-      audio.removeEventListener('loadedmetadata', () => {
-        setDuration(convertDuration(audio.duration))
-      })
+      audioRef.removeEventListener('loadedmetadata', onMetaDataLoaded)
     }
-  }, [])
+  }, [currentAudioRef])
 
   return (
-    <div className="h-2/4 flex items-center p-4 flex-col">
+    <div className="h-2/4 flex items-center p-4 flex-col md:w-1/5 lg:w-1/3">
       <Image src={current.cover} style="w-40 py-4" />
       <TrackInfo
         title={current.title}

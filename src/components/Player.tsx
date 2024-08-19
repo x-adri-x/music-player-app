@@ -6,14 +6,16 @@ import useStore from '@/store'
 import TrackInfo from './TrackInfo'
 
 export default function Player() {
+  const [progress, setProgress] = useState('0')
   const currentTrack = useStore((state) => state.currentTrack)
   const currentLIRef = useStore((state) => state.currentLIRef)
   const isPlaying = useStore((state) => state.isPlaying)
   const setLIRef = useStore((state) => state.setLIRef)
   const currentAudioRef = useStore((state) => state.currentAudioRef)
   const setAudioRef = useStore((state) => state.setAudioRef)
-  const [currentTime, setCurrentTime] = useState(currentAudioRef?.currentTime)
-  const [progress, setProgress] = useState('0')
+  const [_, setCurrentTime] = useState(currentAudioRef?.currentTime)
+  console.log('progress', progress)
+  console.log(currentAudioRef?.duration)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -25,7 +27,7 @@ export default function Player() {
 
     if (!isPlaying) clearInterval(interval)
     return () => clearInterval(interval)
-  }, [currentTime])
+  }, [])
 
   function handleSkipForward() {
     currentLIRef?.classList.remove('bg-stone-300/10')
