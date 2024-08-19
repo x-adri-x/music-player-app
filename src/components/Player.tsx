@@ -16,13 +16,8 @@ export default function Player() {
   const [progress, setProgress] = useState('0')
 
   useEffect(() => {
-    currentAudioRef?.addEventListener('ontimeupdate', () => console.log('yoo'))
-  }, [])
-
-  useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime((prevTime) => {
-        // console.log((prevTime! / currentAudioRef!.duration) * 100)
         setProgress(((prevTime! / currentAudioRef!.duration) * 100).toString())
         return prevTime! + 1
       })
