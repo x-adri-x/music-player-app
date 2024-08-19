@@ -1,13 +1,17 @@
 import Image from '@/components/Image'
 import PlayButton from './PlayButton'
+import { Icon } from '@iconify-icon/react'
 import { useEffect, useState } from 'react'
 import useStore from '@/store'
 import TrackInfo from './TrackInfo'
 
 export default function Player() {
   const currentTrack = useStore((state) => state.currentTrack)
+  const currentLIRef = useStore((state) => state.currentLIRef)
   const isPlaying = useStore((state) => state.isPlaying)
+  const setLIRef = useStore((state) => state.setLIRef)
   const currentAudioRef = useStore((state) => state.currentAudioRef)
+  const setAudioRef = useStore((state) => state.setAudioRef)
   const [currentTime, setCurrentTime] = useState(currentAudioRef?.currentTime)
   const [progress, setProgress] = useState('0')
 
@@ -28,6 +32,18 @@ export default function Player() {
     return () => clearInterval(interval)
   }, [currentTime])
 
+  function handleSkipForward() {
+    currentLIRef?.classList.remove('bg-stone-300/10')
+    if (currentLIRef?.nextElementSibling) {
+      currentLIRef?.nextElementSibling?.classList.add('bg-stone-300/10')
+      setLIRef(currentLIRef?.nextElementSibling as HTMLLIElement)
+      const audio = new Audio(currentLIRef?.nextElementSibling?.id)
+      currentAudioRef?.pause()
+      audio.play()
+      setAudioRef(audio)
+    }
+  }
+
   return (
     <div className="bg-zinc-950 fixed bottom-0 left-0 right-0 text-sm">
       <div className="flex flex-col">
@@ -36,6 +52,7 @@ export default function Player() {
           <div className="flex flex-col w-full">
             <TrackInfo title={currentTrack!.title} artist={currentTrack!.artist} titleStyle="" artistStyle="" />
           </div>
+          <Icon icon="ri:skip-forward-fill" style={{ color: 'white' }} width="30px" onClick={handleSkipForward} />
           <PlayButton style={{ color: 'white' }} className="justify-self-end" />
         </div>
         <progress
