@@ -2,7 +2,7 @@ import Image from '@/components/Image'
 import TrackInfo from './TrackInfo'
 import Favorite from './Favorite'
 import { useRef } from 'react'
-import useStore from '@/store'
+import { useStoreContext } from '@/hooks/useStoreContext'
 
 export type TrackType = {
   id: string
@@ -15,12 +15,7 @@ export type TrackType = {
 
 export default function Track({ track }: { track: TrackType }) {
   const liRef = useRef<HTMLLIElement>(null)
-  const changeTrack = useStore((state) => state.changeTrack)
-  const setAudioRef = useStore((state) => state.setAudioRef)
-  const setIsPlaying = useStore((state) => state.setIsPlaying)
-  const setLIRef = useStore((state) => state.setLIRef)
-  const currentAudioRef = useStore((state) => state.currentAudioRef)
-  const currentLIRef = useStore((state) => state.currentLIRef)
+  const { changeTrack, setAudioRef, setIsPlaying, setLIRef, currentAudioRef, currentLIRef } = useStoreContext()
 
   const handleClick = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     const target = e.target as HTMLElement
@@ -41,7 +36,7 @@ export default function Track({ track }: { track: TrackType }) {
       ref={liRef}
       className="font-sans text-sm flex p-3 justify-between"
       onClick={(e) => handleClick(e)}
-      id={track.track}
+      id={track.id}
     >
       <div className="flex">
         <Image src={track.cover} style="w-16 pr-4" />

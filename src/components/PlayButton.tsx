@@ -1,14 +1,11 @@
-import useStore from '@/store'
+// import useStore from '@/store'
 import { Icon } from '@iconify-icon/react'
 import { useContext } from 'react'
 import { TracksContext } from './TracksContext'
+import { useStoreContext } from '@/hooks/useStoreContext'
 
 export default function PlayButton({ style, className }: { style: React.CSSProperties; className: string }) {
-  const isPlaying = useStore((state) => state.isPlaying)
-  const setIsPlaying = useStore((state) => state.setIsPlaying)
-  const currentAudioRef = useStore((state) => state.currentAudioRef)
-  const currentTrack = useStore((state) => state.currentTrack)
-  const changeTrack = useStore((state) => state.changeTrack)
+  const { isPlaying, setIsPlaying, currentAudioRef, currentTrack, changeTrack } = useStoreContext()
   const tracks = useContext(TracksContext)
   const current = currentTrack ? currentTrack : tracks[0]
 

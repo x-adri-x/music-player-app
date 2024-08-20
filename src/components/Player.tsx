@@ -2,20 +2,15 @@ import Image from '@/components/Image'
 import PlayButton from './PlayButton'
 import { Icon } from '@iconify-icon/react'
 import { useContext, useEffect, useState } from 'react'
-import useStore from '@/store'
 import TrackInfo from './TrackInfo'
 import { TracksContext } from './TracksContext'
+import { useStoreContext } from '@/hooks/useStoreContext'
 
 export default function Player() {
   const tracks = useContext(TracksContext)
   const [progress, setProgress] = useState('0')
-  const currentTrack = useStore((state) => state.currentTrack)
-  const currentLIRef = useStore((state) => state.currentLIRef)
-  const isPlaying = useStore((state) => state.isPlaying)
-  const setLIRef = useStore((state) => state.setLIRef)
-  const currentAudioRef = useStore((state) => state.currentAudioRef)
-  const setAudioRef = useStore((state) => state.setAudioRef)
-  const changeTrack = useStore((state) => state.changeTrack)
+  const { isPlaying, setLIRef, currentAudioRef, currentTrack, changeTrack, currentLIRef, setAudioRef } =
+    useStoreContext()
 
   useEffect(() => {
     function updateProgress() {

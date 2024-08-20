@@ -3,20 +3,21 @@ import PlayButton from './PlayButton'
 import Volume from './Volume'
 import Image from './Image'
 import { convertDuration } from '@/utils'
-import useStore from '@/store'
 import { TracksContext } from './TracksContext'
 import TrackInfo from './TrackInfo'
 import Contribution from './Contribution'
+import { useStoreContext } from '@/hooks/useStoreContext'
 
 export default function Current() {
   const tracks = useContext(TracksContext)
   const [duration, setDuration] = useState<string | null>(null)
-  const currentAudioRef = useStore((state) => state.currentAudioRef)
-  const currentTrack = useStore((state) => state.currentTrack)
+  const { currentAudioRef, setAudioRef, currentTrack, setLIRef } = useStoreContext()
   const current = currentTrack ? currentTrack : tracks[0]
 
   useEffect(() => {
     const audioRef = currentAudioRef ? currentAudioRef : new Audio(tracks[0].track)
+    setAudioRef(audioRef)
+
     audioRef.volume = 0.2
     function onMetaDataLoaded() {
       setDuration(convertDuration(audioRef.duration))
@@ -26,7 +27,11 @@ export default function Current() {
     return () => {
       audioRef.removeEventListener('loadedmetadata', onMetaDataLoaded)
     }
-  }, [currentAudioRef, tracks])
+  }, [currentAudioRef, tracks, setAudioRef])
+
+  useEffect(() => {
+    setLIRef(document.getElementsByTagName('li')[0])
+  }, [setLIRef])
 
   return (
     <div className="h-2/4 flex items-center p-4 flex-col md:w-2/3 lg:w-2/5">
