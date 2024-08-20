@@ -22,8 +22,9 @@ export default function Track({ track }: { track: TrackType }) {
   const currentAudioRef = useStore((state) => state.currentAudioRef)
   const currentLIRef = useStore((state) => state.currentLIRef)
 
-  const handleClick = (e: React.ChangeEvent<HTMLLIElement>) => {
-    if (e.target.tagName === 'LI') {
+  const handleClick = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+    const target = e.target as HTMLElement
+    if (target.tagName !== 'ICONIFY-ICON') {
       currentLIRef?.classList.remove('bg-stone-300/10')
       liRef.current?.classList.add('bg-stone-300/10')
       currentAudioRef?.pause()
@@ -36,7 +37,12 @@ export default function Track({ track }: { track: TrackType }) {
     }
   }
   return (
-    <li ref={liRef} className="font-sans text-sm flex p-3 justify-between" onClick={() => handleClick} id={track.track}>
+    <li
+      ref={liRef}
+      className="font-sans text-sm flex p-3 justify-between"
+      onClick={(e) => handleClick(e)}
+      id={track.id}
+    >
       <div className="flex">
         <Image src={track.cover} style="w-16 pr-4" />
         <div className="flex flex-col">
