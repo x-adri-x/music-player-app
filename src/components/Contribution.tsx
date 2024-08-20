@@ -6,7 +6,7 @@ const PIXABAY =
 export default function Contribution({ current }: { current: TrackType }) {
   return (
     <>
-      <p>
+      <p className="text-white">
         Music by <a href={current.contribution}>{current.artist}</a> from <a href={PIXABAY}>Pixabay</a>
       </p>
     </>

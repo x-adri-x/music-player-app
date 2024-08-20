@@ -10,13 +10,13 @@ export default function TrackList() {
   const currentTrack = useStore((state) => state.currentTrack)
 
   return (
-    <>
+    <div className="w-full">
       <ul>
         {tracks.map((track) => (
           <Track track={track} key={track.id} />
         ))}
       </ul>
       {currentTrack && <Player key={currentTrack.id} />}
-    </>
+    </div>
   )
 }
