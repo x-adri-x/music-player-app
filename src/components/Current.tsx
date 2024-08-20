@@ -14,9 +14,9 @@ export default function Current() {
   const currentAudioRef = useStore((state) => state.currentAudioRef)
   const currentTrack = useStore((state) => state.currentTrack)
   const current = currentTrack ? currentTrack : tracks[0]
-  const audioRef = currentAudioRef ? currentAudioRef : new Audio(tracks[0].track)
 
   useEffect(() => {
+    const audioRef = currentAudioRef ? currentAudioRef : new Audio(tracks[0].track)
     audioRef.volume = 0.2
     function onMetaDataLoaded() {
       setDuration(convertDuration(audioRef.duration))
@@ -26,7 +26,7 @@ export default function Current() {
     return () => {
       audioRef.removeEventListener('loadedmetadata', onMetaDataLoaded)
     }
-  }, [currentAudioRef])
+  }, [currentAudioRef, tracks])
 
   return (
     <div className="h-2/4 flex items-center p-4 flex-col md:w-2/3 lg:w-2/5">

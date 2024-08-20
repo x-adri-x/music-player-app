@@ -1,11 +1,13 @@
 import Image from '@/components/Image'
 import PlayButton from './PlayButton'
 import { Icon } from '@iconify-icon/react'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import useStore from '@/store'
 import TrackInfo from './TrackInfo'
+import { TracksContext } from './TracksContext'
 
 export default function Player() {
+  const tracks = useContext(TracksContext)
   const [progress, setProgress] = useState('0')
   const currentTrack = useStore((state) => state.currentTrack)
   const currentLIRef = useStore((state) => state.currentLIRef)
@@ -13,31 +15,34 @@ export default function Player() {
   const setLIRef = useStore((state) => state.setLIRef)
   const currentAudioRef = useStore((state) => state.currentAudioRef)
   const setAudioRef = useStore((state) => state.setAudioRef)
-  const [_, setCurrentTime] = useState(currentAudioRef?.currentTime)
-  console.log('progress', progress)
-  console.log(currentAudioRef?.duration)
+  const changeTrack = useStore((state) => state.changeTrack)
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTime((prevTime) => {
-        setProgress(((prevTime! / currentAudioRef!.duration) * 100).toString())
-        return prevTime! + 1
-      })
-    }, 1000)
+    function updateProgress() {
+      if (currentAudioRef) {
+        const currentTime = currentAudioRef.currentTime
+        setProgress(((currentTime / currentAudioRef.duration) * 100).toString())
+      }
+    }
+    const interval = setInterval(updateProgress, 1000)
 
     if (!isPlaying) clearInterval(interval)
     return () => clearInterval(interval)
-  }, [])
+  }, [isPlaying, currentAudioRef])
 
   function handleSkipForward() {
     currentLIRef?.classList.remove('bg-stone-300/10')
     if (currentLIRef?.nextElementSibling) {
       currentLIRef?.nextElementSibling?.classList.add('bg-stone-300/10')
       setLIRef(currentLIRef?.nextElementSibling as HTMLLIElement)
-      const audio = new Audio(currentLIRef?.nextElementSibling?.id)
-      currentAudioRef?.pause()
-      audio.play()
-      setAudioRef(audio)
+      const next = tracks.find((el) => el.id === currentLIRef?.nextElementSibling?.id)
+      if (next) {
+        changeTrack(next)
+        const audio = new Audio(next.track)
+        currentAudioRef?.pause()
+        audio.play()
+        setAudioRef(audio)
+      }
     }
   }
 
@@ -52,11 +57,7 @@ export default function Player() {
           <Icon icon="ri:skip-forward-fill" style={{ color: 'white' }} width="30px" onClick={handleSkipForward} />
           <PlayButton style={{ color: 'white' }} className="justify-self-end" />
         </div>
-        <progress
-          max={currentAudioRef!.duration.toString()}
-          value={progress}
-          className="h-0.5 mb-2 mx-5 w-auto accent-white progress"
-        />
+        <progress max="100" value={progress} className="h-0.5 mb-2 mx-5 w-auto accent-white progress" />
       </div>
     </div>
   )

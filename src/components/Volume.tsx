@@ -13,7 +13,11 @@ export default function Volume() {
   }
 
   function handleClick() {
-    showVolume ? setShowVolume(false) : setShowVolume(true)
+    if (showVolume) {
+      setShowVolume(false)
+    } else {
+      setShowVolume(true)
+    }
   }
 
   return (
