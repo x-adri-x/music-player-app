@@ -6,6 +6,7 @@ import { convertDuration } from '@/utils'
 import useStore from '@/store'
 import { TracksContext } from './TracksContext'
 import TrackInfo from './TrackInfo'
+import Contribution from './Contribution'
 
 export default function Current() {
   const tracks = useContext(TracksContext)
@@ -14,7 +15,6 @@ export default function Current() {
   const currentTrack = useStore((state) => state.currentTrack)
   const current = currentTrack ? currentTrack : tracks[0]
   const audioRef = currentAudioRef ? currentAudioRef : new Audio(tracks[0].track)
-  console.log('current track has changed', currentAudioRef)
 
   useEffect(() => {
     audioRef.volume = 0.2
@@ -29,7 +29,7 @@ export default function Current() {
   }, [currentAudioRef])
 
   return (
-    <div className="h-2/4 flex items-center p-4 flex-col md:w-1/5 lg:w-1/3">
+    <div className="h-2/4 flex items-center p-4 flex-col md:w-2/3 lg:w-2/5">
       <Image src={current.cover} style="w-40 py-4" />
       <TrackInfo
         title={current.title}
@@ -45,7 +45,7 @@ export default function Current() {
             <PlayButton style={{ color: 'black' }} className="bg-lime-500 rounded-full p-3" />
           </div>
         </div>
-        <p className="text-white opacity-60" dangerouslySetInnerHTML={{ __html: current.contribution }} />
+        <Contribution current={current} />
       </div>
     </div>
   )
