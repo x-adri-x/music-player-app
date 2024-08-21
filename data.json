@@ -1,6 +1,30 @@
 {
   "data": [
     {
+      "id": "94t6nxyc",
+      "title": "Bagaimana",
+      "artist": "HSRAPZ",
+      "track": "src/assets/tracks/bagaimana-hsrapz-230721.mp3",
+      "cover": "src/assets/covers/hsrapz-bagaimana.webp",
+      "contribution": "https://pixabay.com/users/hsrapz-45328069/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=230721"
+    },
+    {
+      "id": "euyx5int",
+      "title": "Beneath Stormy Skies",
+      "artist": "Albert Paul",
+      "track": "src/assets/tracks/beneath-stormy-skies-rock-music-201995.mp3",
+      "cover": "src/assets/covers/beneath-stormy-skies.jpg",
+      "contribution": "https://pixabay.com/users/albert-paul-4203169/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=201995"
+    },
+    {
+      "id": "lyvo0kt3",
+      "title": "Chasing Sunsets",
+      "artist": "Markus Köhler",
+      "track": "src/assets/tracks/chasing-sunsets-223973.mp3",
+      "cover": "src/assets/covers/vladimir500-chasing-sunsets.webp",
+      "contribution": "https://pixabay.com/users/vladimir500-36867757/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=223704"
+    },
+    {
       "id": "poh230pv",
       "title": "Rock Trap",
       "artist": "Daytona Beats",
@@ -23,6 +47,14 @@
       "track": "src/assets/tracks/i-wish-i-did-better-143614.mp3",
       "cover": "src/assets/covers/cybercutie-i-wish-i-did-better.jpg",
       "contribution": "https://pixabay.com/users/cybercutie-22684503/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=143614"
+    },
+    {
+      "id": "5ch221yr",
+      "title": "Little Ball Of Energy",
+      "artist": "Scoopski",
+      "track": "src/assets/tracks/little-ball-of-energy-scoopski-175371.mp3",
+      "cover": "src/assets/covers/scoopski-the-band-little-ball-of-energy.webp",
+      "contribution": "https://pixabay.com/users/scoopskitheband-37975092/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=175371"
     },
     {
       "id": "otu9o15g",
