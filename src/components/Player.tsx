@@ -9,7 +9,7 @@ import { useStoreContext } from '@/hooks/useStoreContext'
 export default function Player() {
   const tracks = useContext(TracksContext)
   const [progress, setProgress] = useState('0')
-  const { isPlaying, setLIRef, currentAudioRef, currentTrack, changeTrack, currentLIRef, setAudioRef } =
+  const { isPlaying, setLIRef, currentAudioRef, currentTrack, changeTrack, currentLIRef, setAudioRef, setIsPlaying } =
     useStoreContext()
 
   useEffect(() => {
@@ -36,6 +36,7 @@ export default function Player() {
         const audio = new Audio(next.track)
         currentAudioRef?.pause()
         audio.play()
+        setIsPlaying(true)
         setAudioRef(audio)
       }
     }
