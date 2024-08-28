@@ -2,7 +2,7 @@ import Image from '@/components/Image'
 import TrackInfo from './TrackInfo'
 import Favorite from './Favorite'
 import { useRef } from 'react'
-import { useStoreContext } from '@/hooks/useStoreContext'
+import useStore from '@/store'
 
 export type TrackType = {
   id: string
@@ -15,20 +15,29 @@ export type TrackType = {
 
 export default function Track({ track }: { track: TrackType }) {
   const liRef = useRef<HTMLLIElement>(null)
-  const { changeTrack, setAudioRef, setIsPlaying, setLIRef, currentAudioRef, currentLIRef } = useStoreContext()
+  const setIsPlaying = useStore((state) => state.setIsPlaying)
+  const setLIRef = useStore((state) => state.setLIRef)
+  const currentAudioRef = useStore((state) => state.currentAudioRef)
+  const currentLIRef = useStore((state) => state.currentLIRef)
+  const setCurrentTrack = useStore((state) => state.setCurrentTrack)
 
   const handleClick = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     const target = e.target as HTMLElement
     if (target.tagName !== 'ICONIFY-ICON') {
       currentLIRef?.classList.remove('bg-stone-300/10')
       liRef.current?.classList.add('bg-stone-300/10')
-      currentAudioRef?.pause()
-      const audio = new Audio(track.track)
-      audio.play()
+      if (currentAudioRef && currentAudioRef.current) {
+        currentAudioRef.current.pause()
+        currentAudioRef.current.src = track.track
+        currentAudioRef.current.load()
+        currentAudioRef.current.oncanplay = () => {
+          if (currentAudioRef.current) currentAudioRef.current.play()
+        }
+      }
+
       setLIRef(liRef.current)
-      setAudioRef(audio)
       setIsPlaying(true)
-      changeTrack(track)
+      setCurrentTrack(track)
     }
   }
   return (

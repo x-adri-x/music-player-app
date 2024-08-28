@@ -2,11 +2,11 @@ import { useContext } from 'react'
 import Track from '@/components/Track'
 import { TracksContext } from '@/components/TracksContext'
 import Player from './Player'
-import { useStoreContext } from '@/hooks/useStoreContext'
+import useStore from '@/store'
 
 export default function TrackList() {
   const tracks = useContext(TracksContext)
-  const { currentTrack } = useStoreContext()
+  const currentTrack = useStore((state) => state.currentTrack)
 
   return (
     <div className="w-full">

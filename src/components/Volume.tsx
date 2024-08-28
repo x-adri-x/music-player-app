@@ -1,15 +1,15 @@
-import { useStoreContext } from '@/hooks/useStoreContext'
+import useStore from '@/store'
 import { Icon } from '@iconify-icon/react'
 import { useState } from 'react'
 
 export default function Volume() {
   const [showVolume, setShowVolume] = useState(false)
   const [volume, setVolume] = useState('0.2')
-  const { currentAudioRef } = useStoreContext()
+  const currentAudioRef = useStore((state) => state.currentAudioRef)
 
   function handleVolumeChange(e: React.ChangeEvent<HTMLInputElement>) {
     setVolume(e.target.value)
-    currentAudioRef!.volume = parseFloat(e.target.value)
+    if (currentAudioRef && currentAudioRef.current) currentAudioRef.current.volume = parseFloat(e.target.value)
   }
 
   function handleClick() {

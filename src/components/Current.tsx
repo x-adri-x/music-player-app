@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import PlayButton from './PlayButton'
 import Volume from './Volume'
 import Image from './Image'
@@ -6,28 +6,34 @@ import { convertDuration } from '@/utils'
 import { TracksContext } from './TracksContext'
 import TrackInfo from './TrackInfo'
 import Contribution from './Contribution'
-import { useStoreContext } from '@/hooks/useStoreContext'
+import useStore from '@/store'
 
 export default function Current() {
   const tracks = useContext(TracksContext)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
   const [duration, setDuration] = useState<string | null>(null)
-  const { currentAudioRef, setAudioRef, currentTrack, setLIRef } = useStoreContext()
+  const currentAudioRef = useStore((state) => state.currentAudioRef)
+  const setAudioRef = useStore((state) => state.setAudioRef)
+  const currentTrack = useStore((state) => state.currentTrack)
+  const setLIRef = useStore((state) => state.setLIRef)
   const current = currentTrack ? currentTrack : tracks[0]
 
   useEffect(() => {
-    const audioRef = currentAudioRef ? currentAudioRef : new Audio(tracks[0].track)
-    setAudioRef(audioRef)
+    if (audioRef) {
+      const ref = audioRef
+      setAudioRef(ref)
 
-    audioRef.volume = 0.2
-    function onMetaDataLoaded() {
-      setDuration(convertDuration(audioRef.duration))
-    }
-    audioRef.addEventListener('loadedmetadata', onMetaDataLoaded)
+      if (ref.current) ref.current.volume = 0.2
+      function onMetaDataLoaded() {
+        if (ref.current) setDuration(convertDuration(ref.current.duration))
+      }
+      if (ref.current) ref.current.addEventListener('loadedmetadata', onMetaDataLoaded)
 
-    return () => {
-      audioRef.removeEventListener('loadedmetadata', onMetaDataLoaded)
+      return () => {
+        if (ref.current) ref.current.removeEventListener('loadedmetadata', onMetaDataLoaded)
+      }
     }
-  }, [currentAudioRef, tracks, setAudioRef])
+  }, [currentAudioRef, tracks, setAudioRef, audioRef])
 
   useEffect(() => {
     setLIRef(document.getElementsByTagName('li')[0])
@@ -35,6 +41,7 @@ export default function Current() {
 
   return (
     <div className="h-2/4 flex items-center p-4 flex-col md:w-2/3 lg:w-2/5">
+      <audio ref={audioRef} src={current.track} />
       <Image src={current.cover} style="w-40 py-4" />
       <TrackInfo
         title={current.title}

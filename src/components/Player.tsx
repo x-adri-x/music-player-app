@@ -4,19 +4,24 @@ import { Icon } from '@iconify-icon/react'
 import { useContext, useEffect, useState } from 'react'
 import TrackInfo from './TrackInfo'
 import { TracksContext } from './TracksContext'
-import { useStoreContext } from '@/hooks/useStoreContext'
+import useStore from '@/store'
 
 export default function Player() {
   const tracks = useContext(TracksContext)
   const [progress, setProgress] = useState('0')
-  const { isPlaying, setLIRef, currentAudioRef, currentTrack, changeTrack, currentLIRef, setAudioRef, setIsPlaying } =
-    useStoreContext()
+  const isPlaying = useStore((state) => state.isPlaying)
+  const setLIRef = useStore((state) => state.setLIRef)
+  const currentAudioRef = useStore((state) => state.currentAudioRef)
+  const currentTrack = useStore((state) => state.currentTrack)
+  const setCurrentTrack = useStore((state) => state.setCurrentTrack)
+  const currentLIRef = useStore((state) => state.currentLIRef)
+  const setIsPlaying = useStore((state) => state.setIsPlaying)
 
   useEffect(() => {
     function updateProgress() {
-      if (currentAudioRef) {
-        const currentTime = currentAudioRef.currentTime
-        setProgress(((currentTime / currentAudioRef.duration) * 100).toString())
+      if (currentAudioRef && currentAudioRef.current) {
+        const currentTime = currentAudioRef.current.currentTime
+        setProgress(((currentTime / currentAudioRef.current.duration) * 100).toString())
       }
     }
     const interval = setInterval(updateProgress, 1000)
@@ -32,12 +37,16 @@ export default function Player() {
       setLIRef(currentLIRef?.nextElementSibling as HTMLLIElement)
       const next = tracks.find((el) => el.id === currentLIRef?.nextElementSibling?.id)
       if (next) {
-        changeTrack(next)
-        const audio = new Audio(next.track)
-        currentAudioRef?.pause()
-        audio.play()
+        setCurrentTrack(next)
+        if (currentAudioRef && currentAudioRef.current) {
+          currentAudioRef.current.pause()
+          currentAudioRef.current.src = next.track
+          currentAudioRef.current.load()
+          currentAudioRef.current.oncanplay = () => {
+            if (currentAudioRef.current) currentAudioRef.current.play()
+          }
+        }
         setIsPlaying(true)
-        setAudioRef(audio)
       }
     }
   }

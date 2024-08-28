@@ -1,14 +1,11 @@
 import Tracklist from '@/components/TrackList'
 import { TracksContext } from '@/components/TracksContext'
-import { StoreContext } from './StoreContext'
 import { TrackType } from '@/components/Track'
 import Current from './Current'
 import { useEffect, useState } from 'react'
-import useStore from '@/store'
 
 export default function Layout() {
   const [tracks, setTracks] = useState<Array<TrackType>>([])
-  const store = useStore()
 
   useEffect(() => {
     async function getData() {
@@ -33,10 +30,8 @@ export default function Layout() {
   return (
     <div className="md:flex lg:flex">
       <TracksContext.Provider value={tracks}>
-        <StoreContext.Provider value={store}>
-          <Current />
-          <Tracklist />
-        </StoreContext.Provider>
+        <Current />
+        <Tracklist />
       </TracksContext.Provider>
     </div>
   )
