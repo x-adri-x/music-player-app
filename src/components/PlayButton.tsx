@@ -16,6 +16,7 @@ export default function PlayButton({ style, className }: { style: React.CSSPrope
   function handleClick() {
     if (!isPlaying) {
       setIsPlaying(true)
+      console.log(currentAudioRef?.current?.src)
       if (currentAudioRef && currentAudioRef.current) currentAudioRef.current.play()
       if (!currentTrack) setCurrentTrack(current)
     } else {
