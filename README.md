@@ -1,50 +1,58 @@
-# React + TypeScript + Vite
+# 🎵 Music Player
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple and sleek music player application built with React and Vite. This app allows you to browse a tracklist, play songs, adjust volume, pause, and skip tracks.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Tracklist Display: Browse a list of songs to select and play.
+- Play/Pause tracks.
+- Skip forward to the next song.
+- Select any track from the list to play directly.
+- Volume Control: Adjust the playback volume to your liking.
+- Current Song Highlight: See which song is currently playing in the tracklist.
 
-## Expanding the ESLint configuration
+## 📦 Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. Clone the repository:
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```
+git clone https://github.com/x-adri-x/music-player-app.git
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2. Navigate to the project directory:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
 ```
+cd music-player-app
+```
+
+3. Install dependencies:
+
+```
+npm install
+```
+
+4. Start the development server:
+
+```
+npm run dev
+```
+
+5. Go to your browser and navigate to:
+
+```
+http://localhost:5173
+```
+
+## 📖 Usage
+
+1. Browse the Tracklist displayed on the main screen.
+2. Click on any track to start playing it.
+3. Use the Play/Pause button to control playback.
+4. Adjust the Volume Slider to control the volume.
+5. Skip to the next song using the Next button.
+6. Enjoy seamless music playback and navigation!
+
+## Future Enhancements
+
+- Add more features like skip to previous song, shuffle or repeat.
+- Different themes to select from.

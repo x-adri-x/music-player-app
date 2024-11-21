@@ -28,7 +28,7 @@ export default function Layout() {
     if (tracks.length === 0) return <p className="font-sans text-slate-200">Loading ...</p>
   }
   return (
-    <div className="md:flex lg:flex">
+    <div className="md:flex lg:flex pb-[10vh]">
       <TracksContext.Provider value={tracks}>
         <Current />
         <Tracklist />
