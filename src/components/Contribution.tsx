@@ -1,9 +1,9 @@
-import { TrackType } from './Track'
+import { Track } from '@/utils/types'
 
 const PIXABAY =
   'https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=176004'
 
-export default function Contribution({ current }: { current: TrackType }) {
+export default function Contribution({ current }: { current: Track }) {
   return (
     <>
       <p className="text-white">

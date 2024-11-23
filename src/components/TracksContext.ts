@@ -1,4 +1,4 @@
 import { createContext } from 'react'
-import { TrackType } from './Track'
+import { Track } from '@/utils/types'
 
-export const TracksContext = createContext<TrackType[]>([])
+export const TracksContext = createContext<Track[]>([])

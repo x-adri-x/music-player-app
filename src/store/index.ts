@@ -1,15 +1,15 @@
-import { TrackType } from '@/components/Track'
+import { Track } from '@/utils/types'
 import { MutableRefObject } from 'react'
 import { create } from 'zustand'
 
 export interface State {
-  currentTrack: TrackType | null
+  currentTrack: Track | null
   currentAudioRef: MutableRefObject<HTMLAudioElement | null> | null
   currentLIRef: HTMLLIElement | null
   isPlaying: boolean
   setAudioRef: (element: MutableRefObject<HTMLAudioElement | null>) => void
   setLIRef: (element: HTMLLIElement | null) => void
-  setCurrentTrack: (track: TrackType | null) => void
+  setCurrentTrack: (track: Track | null) => void
   setIsPlaying: (playing: boolean) => void
 }
 

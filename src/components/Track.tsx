@@ -3,17 +3,9 @@ import TrackInfo from './TrackInfo'
 import Favorite from './Favorite'
 import { useRef } from 'react'
 import useStore from '@/store'
+import { type Track } from '@/utils/types'
 
-export type TrackType = {
-  id: string
-  title: string
-  artist: string
-  track: string
-  cover: string
-  contribution: string
-}
-
-export default function Track({ track }: { track: TrackType }) {
+export default function Track({ track }: { track: Track }) {
   const liRef = useRef<HTMLLIElement>(null)
   const setIsPlaying = useStore((state) => state.setIsPlaying)
   const setLIRef = useStore((state) => state.setLIRef)
