@@ -54,7 +54,8 @@ http://localhost:5173
 
 ## Preview
 
-<img src="public/assets/tracklist.png" width="200" style="margin-right: 15px" /><img src="public/assets/track-playing.png" width="200" style="margin-right: 15px" /><img src="public/assets/volume-control.png" width="200" />
+<div style="text-align:center">
+<img src="public/assets/tracklist.png" width="200" />&nbsp;&nbsp;<img src="public/assets/track-playing.png" width="200" />&nbsp;&nbsp;<img src="public/assets/volume-control.png" width="200" /></div>
 
 ## Future Enhancements
 
