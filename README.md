@@ -52,6 +52,10 @@ http://localhost:5173
 5. Skip to the next song using the Next button.
 6. Enjoy seamless music playback and navigation!
 
+## Preview
+
+<img src="public/assets/tracklist.png" width="200" style="margin-right: 15px" /><img src="public/assets/track-playing.png" width="200" style="margin-right: 15px" /><img src="public/assets/volume-control.png" width="200" />
+
 ## Future Enhancements
 
 - Add more features like skip to previous song, shuffle or repeat.
