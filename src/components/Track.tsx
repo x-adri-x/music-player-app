@@ -1,23 +1,19 @@
 import Image from '@/components/Image'
 import TrackInfo from './TrackInfo'
 import Favorite from './Favorite'
-import { useRef } from 'react'
 import useStore from '@/store'
 import { type Track } from '@/utils/types'
 
-export default function Track({ track }: { track: Track }) {
-  const liRef = useRef<HTMLLIElement>(null)
+export default function Track({ track, index }: { track: Track; index: number }) {
   const setIsPlaying = useStore((state) => state.setIsPlaying)
-  const setLIRef = useStore((state) => state.setLIRef)
   const currentAudioRef = useStore((state) => state.currentAudioRef)
-  const currentLIRef = useStore((state) => state.currentLIRef)
-  const setCurrentTrack = useStore((state) => state.setCurrentTrack)
+  const currentTrackIndex = useStore((state) => state.currentTrackIndex)
+  const setCurrentTrackIndex = useStore((state) => state.setCurrentTrackIndex)
+  const selected = index === currentTrackIndex ? 'bg-stone-300/10' : ''
 
   const handleClick = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     const target = e.target as HTMLElement
     if (target.tagName !== 'ICONIFY-ICON') {
-      currentLIRef?.classList.remove('bg-stone-300/10')
-      liRef.current?.classList.add('bg-stone-300/10')
       if (currentAudioRef && currentAudioRef.current) {
         currentAudioRef.current.pause()
         currentAudioRef.current.src = track.track
@@ -27,15 +23,13 @@ export default function Track({ track }: { track: Track }) {
         }
       }
 
-      setLIRef(liRef.current)
       setIsPlaying(true)
-      setCurrentTrack(track)
+      setCurrentTrackIndex(index)
     }
   }
   return (
     <li
-      ref={liRef}
-      className="font-sans text-sm flex p-3 justify-between"
+      className={`font-sans text-sm flex p-3 justify-between ${selected}`}
       onClick={(e) => handleClick(e)}
       id={track.id}
     >

@@ -10,12 +10,11 @@ export default function Player() {
   const tracks = useContext(TracksContext)
   const [progress, setProgress] = useState('0')
   const isPlaying = useStore((state) => state.isPlaying)
-  const setLIRef = useStore((state) => state.setLIRef)
   const currentAudioRef = useStore((state) => state.currentAudioRef)
-  const currentTrack = useStore((state) => state.currentTrack)
-  const setCurrentTrack = useStore((state) => state.setCurrentTrack)
-  const currentLIRef = useStore((state) => state.currentLIRef)
+  const currentTrackIndex = useStore((state) => state.currentTrackIndex)
+  const setCurrentTrackIndex = useStore((state) => state.setCurrentTrackIndex)
   const setIsPlaying = useStore((state) => state.setIsPlaying)
+  const currentTrack = tracks[currentTrackIndex]
 
   useEffect(() => {
     function updateProgress() {
@@ -31,23 +30,17 @@ export default function Player() {
   }, [isPlaying, currentAudioRef])
 
   function handleSkipForward() {
-    currentLIRef?.classList.remove('bg-stone-300/10')
-    if (currentLIRef?.nextElementSibling) {
-      currentLIRef?.nextElementSibling?.classList.add('bg-stone-300/10')
-      setLIRef(currentLIRef?.nextElementSibling as HTMLLIElement)
-      const next = tracks.find((el) => el.id === currentLIRef?.nextElementSibling?.id)
-      if (next) {
-        setCurrentTrack(next)
-        if (currentAudioRef && currentAudioRef.current) {
-          currentAudioRef.current.pause()
-          currentAudioRef.current.src = next.track
-          currentAudioRef.current.load()
-          currentAudioRef.current.oncanplay = () => {
-            if (currentAudioRef.current) currentAudioRef.current.play()
-          }
+    if (currentTrackIndex + 1 !== tracks.length) {
+      setCurrentTrackIndex(currentTrackIndex + 1)
+      if (currentAudioRef && currentAudioRef.current) {
+        currentAudioRef.current.pause()
+        currentAudioRef.current.src = tracks[currentTrackIndex + 1].track
+        currentAudioRef.current.load()
+        currentAudioRef.current.oncanplay = () => {
+          if (currentAudioRef.current) currentAudioRef.current.play()
         }
-        setIsPlaying(true)
       }
+      setIsPlaying(true)
     }
   }
 

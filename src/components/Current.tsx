@@ -14,9 +14,8 @@ export default function Current() {
   const [duration, setDuration] = useState<string | null>(null)
   const currentAudioRef = useStore((state) => state.currentAudioRef)
   const setAudioRef = useStore((state) => state.setAudioRef)
-  const currentTrack = useStore((state) => state.currentTrack)
-  const setLIRef = useStore((state) => state.setLIRef)
-  const current = currentTrack ? currentTrack : tracks[0]
+  const currentTrackIndex = useStore((state) => state.currentTrackIndex)
+  const current = tracks[currentTrackIndex]
 
   useEffect(() => {
     if (audioRef) {
@@ -34,10 +33,6 @@ export default function Current() {
       }
     }
   }, [currentAudioRef, tracks, setAudioRef, audioRef])
-
-  useEffect(() => {
-    setLIRef(document.getElementsByTagName('li')[0])
-  }, [setLIRef])
 
   return (
     <div className="h-2/4 flex items-center p-4 flex-col md:w-2/3 lg:w-2/5">

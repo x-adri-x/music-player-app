@@ -6,13 +6,14 @@ import useStore from '@/store'
 
 export default function TrackList() {
   const tracks = useContext(TracksContext)
-  const currentTrack = useStore((state) => state.currentTrack)
+  const currentTrackIndex = useStore((state) => state.currentTrackIndex)
+  const currentTrack = tracks[currentTrackIndex]
 
   return (
     <div className="w-full">
       <ul>
-        {tracks.map((track) => (
-          <Track track={track} key={track.id} />
+        {tracks.map((track, i) => (
+          <Track track={track} key={track.id} index={i} />
         ))}
       </ul>
       {currentTrack && <Player key={currentTrack.id} />}
