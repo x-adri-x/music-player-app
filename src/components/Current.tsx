@@ -1,15 +1,14 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import PlayButton from './PlayButton'
 import Volume from './Volume'
 import Image from './Image'
 import { convertDuration } from '@/utils'
-import { TracksContext } from './TracksContext'
 import TrackInfo from './TrackInfo'
 import Contribution from './Contribution'
 import useStore from '@/store'
 
 export default function Current() {
-  const tracks = useContext(TracksContext)
+  const tracks = useStore((state) => state.tracks)
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const [duration, setDuration] = useState<string | null>(null)
   const currentAudioRef = useStore((state) => state.currentAudioRef)

@@ -1,13 +1,12 @@
 import Image from '@/components/Image'
 import PlayButton from './PlayButton'
 import { Icon } from '@iconify-icon/react'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import TrackInfo from './TrackInfo'
-import { TracksContext } from './TracksContext'
 import useStore from '@/store'
 
 export default function Player() {
-  const tracks = useContext(TracksContext)
+  const tracks = useStore((state) => state.tracks)
   const [progress, setProgress] = useState('0')
   const isPlaying = useStore((state) => state.isPlaying)
   const currentAudioRef = useStore((state) => state.currentAudioRef)

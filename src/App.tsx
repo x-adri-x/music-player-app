@@ -1,22 +1,23 @@
-import Tracklist from '@/components/TrackList'
-import { TracksContext } from '@/components/TracksContext'
-import Current from '@/components/Current'
 import { useFetch } from '@/hooks/useFetch'
 import Loader from '@/components/Loader'
+import { lazy, Suspense } from 'react'
+import ErrorBoundary from '@/components/ErrorBoundry'
+import ErrorFallback from '@/components/ErrorFallback'
+const Tracklist = lazy(() => import('@/components/TrackList'))
+const Current = lazy(() => import('@/components/Current'))
 
 function App() {
-  const { tracks, loading, error } = useFetch()
-
-  if (loading) return <Loader />
-  if (error) return <p>Error fetching songs: {error}</p>
+  const { error } = useFetch()
 
   return (
-    <div className={`md:flex lg:flex pb-[10vh]`}>
-      <TracksContext.Provider value={tracks}>
-        <Current />
-        <Tracklist />
-      </TracksContext.Provider>
-    </div>
+    <ErrorBoundary fallback={<ErrorFallback error={error} />}>
+      <Suspense fallback={<Loader />}>
+        <div className={`md:flex lg:flex pb-[10vh]`}>
+          <Current />
+          <Tracklist />
+        </div>
+      </Suspense>
+    </ErrorBoundary>
   )
 }
 
