@@ -4,7 +4,7 @@ import { create } from 'zustand'
 
 export interface State {
   tracks: Track[]
-  currentTrackIndex: number
+  currentTrackIndex: number | null
   currentAudioRef: MutableRefObject<HTMLAudioElement | null> | null
   isPlaying: boolean
   setTracks: (tracks: Track[]) => void
@@ -15,7 +15,7 @@ export interface State {
 
 const useStore = create<State>((set) => ({
   tracks: [],
-  currentTrackIndex: 0,
+  currentTrackIndex: null,
   currentAudioRef: null,
   isPlaying: false,
   setTracks: (tracks) => set(() => ({ tracks: tracks })),

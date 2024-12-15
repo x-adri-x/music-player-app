@@ -14,7 +14,7 @@ export default function Current() {
   const currentAudioRef = useStore((state) => state.currentAudioRef)
   const setAudioRef = useStore((state) => state.setAudioRef)
   const currentTrackIndex = useStore((state) => state.currentTrackIndex)
-  const current = tracks[currentTrackIndex]
+  const currentTrack = tracks[currentTrackIndex ? currentTrackIndex : 0]
 
   useEffect(() => {
     if (audioRef) {
@@ -35,11 +35,11 @@ export default function Current() {
 
   return (
     <div className="h-2/4 flex items-center p-4 flex-col md:w-2/3 lg:w-2/5">
-      <audio ref={audioRef} src={current.track} />
-      <Image src={current.cover} style="w-40 py-4" />
+      <audio ref={audioRef} src={currentTrack.track} />
+      <Image src={currentTrack.cover} style="w-40 py-4" />
       <TrackInfo
-        title={current.title}
-        artist={current.artist}
+        title={currentTrack.title}
+        artist={currentTrack.artist}
         titleStyle="self-start text-3xl uppercase font-bold"
         artistStyle="self-start"
       />
@@ -51,7 +51,7 @@ export default function Current() {
             <PlayButton style={{ color: 'black' }} className="bg-lime-500 rounded-full p-3" />
           </div>
         </div>
-        <Contribution current={current} />
+        <Contribution current={currentTrack} />
       </div>
     </div>
   )

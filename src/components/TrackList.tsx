@@ -3,9 +3,10 @@ import Player from './Player'
 import useStore from '@/store'
 
 export default function TrackList() {
+  let currentTrack
   const tracks = useStore((state) => state.tracks)
   const currentTrackIndex = useStore((state) => state.currentTrackIndex)
-  const currentTrack = tracks[currentTrackIndex]
+  if (currentTrackIndex) currentTrack = tracks[currentTrackIndex]
 
   return (
     <div className="w-full">
